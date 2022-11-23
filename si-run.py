@@ -8,7 +8,6 @@ from datetime import datetime
 from tqdm import tqdm
 
 def get_article_info(driver, crawl_date, press_list, title_list, link_list, date_list, more_news_base_url=None, more_news=False):
-    print("1번 실행 중")
     more_news_url_list = []
     while True:    
         page_html_source = driver.page_source
@@ -57,8 +56,9 @@ def get_article_info(driver, crawl_date, press_list, title_list, link_list, date
     
     return press_list, title_list, link_list, more_news_url_list
     
+    
+
 def get_naver_news_info_from_selenium(keyword, save_path, target_date, ds_de, sort=0, remove_duplicate=False):
-    print("2번 실행 중")
     crawl_date = f"{target_date[:4]}.{target_date[4:6]}.{target_date[6:]}"
     driver = wd.Chrome("./chromedriver") # chromedriver 파일 경로
 
@@ -81,21 +81,21 @@ def get_naver_news_info_from_selenium(keyword, save_path, target_date, ds_de, so
                                                                             more_news=True)
     driver.close()
     
-    # if len(more_news_url_list) > 0:
-    #     print(len(more_news_url_list))
-    #     more_news_url_list = list(set(more_news_url_list))
-    #     print(f"->{len(more_news_url_list)}")
-    #     for more_news_url in more_news_url_list:
-    #         driver = wd.Chrome("./chromedriver")
-    #         driver.get(more_news_url)
+    if len(more_news_url_list) > 0:
+        print(len(more_news_url_list))
+        more_news_url_list = list(set(more_news_url_list))
+        print(f"->{len(more_news_url_list)}")
+        for more_news_url in more_news_url_list:
+            driver = wd.Chrome("./chromedriver")
+            driver.get(more_news_url)
             
-    #         press_list, title_list, link_list, more_news_url_list = get_article_info(driver=driver, 
-    #                                                                         crawl_date=crawl_date, 
-    #                                                                         press_list=press_list, 
-    #                                                                         title_list=title_list, 
-    #                                                                         link_list=link_list,
-    #                                                                         date_list=date_list)
-    #         driver.close()
+            press_list, title_list, link_list, more_news_url_list = get_article_info(driver=driver, 
+                                                                            crawl_date=crawl_date, 
+                                                                            press_list=press_list, 
+                                                                            title_list=title_list, 
+                                                                            link_list=link_list,
+                                                                            date_list=date_list)
+            driver.close()
     article_df = pd.DataFrame({"날짜": date_list, "언론사": press_list, "제목": title_list, "링크": link_list})
     
     print(f"extract article num : {len(article_df)}")
@@ -106,7 +106,6 @@ def get_naver_news_info_from_selenium(keyword, save_path, target_date, ds_de, so
     article_df.to_excel(save_path, index=False)
 
 def crawl_news_data(keyword, year, month, start_day, end_day, save_path):
-    print("3번 실행 중")
     for day in tqdm(range(start_day, end_day+1)):
         date_time_obj = datetime(year=year, month=month, day=day)
         target_date = date_time_obj.strftime("%Y%m%d")
@@ -114,9 +113,9 @@ def crawl_news_data(keyword, year, month, start_day, end_day, save_path):
 
         get_naver_news_info_from_selenium(keyword=keyword, save_path=f"{save_path}/{target_date}_{keyword}_.xlsx", target_date=target_date, ds_de=ds_de, remove_duplicate=False)
 
-keywords = ['덕성여대']
+keywords = ['코로나19', '화재', '미세먼지', '지진', '화재']
 save_path = "./naver_news_article_2022"
 
 for keyword in keywords:
     print(f"start keyword - {keyword} crawling ...")
-    crawl_news_data(keyword=keyword, year=2022, month=11, start_day=23, end_day=23, save_path=save_path)
+    crawl_news_data(keyword=keyword, year=2022, month=11, start_day=13, end_day=13, save_path=save_path)
