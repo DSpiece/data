@@ -96,7 +96,7 @@ def get_naver_news_info_from_selenium(keyword, save_path, target_date, ds_de, so
                                                                             link_list=link_list,
                                                                             date_list=date_list)
             driver.close()
-    article_df = pd.DataFrame({"날짜": date_list, "언론사": press_list, "제목": title_list, "링크": link_list})
+    article_df = pd.DataFrame({"제목": title_list, "링크": link_list})
     
     print(f"extract article num : {len(article_df)}")
     if remove_duplicate:
@@ -111,11 +111,12 @@ def crawl_news_data(keyword, year, month, start_day, end_day, save_path):
         target_date = date_time_obj.strftime("%Y%m%d")
         ds_de = date_time_obj.strftime("%Y.%m.%d")
 
-        get_naver_news_info_from_selenium(keyword=keyword, save_path=f"{save_path}/{target_date}_{keyword}_.xlsx", target_date=target_date, ds_de=ds_de, remove_duplicate=False)
+        get_naver_news_info_from_selenium(keyword=keyword, save_path=f"{save_path}/{keyword}_.xlsx", target_date=target_date, ds_de=ds_de, remove_duplicate=False)
 
 keywords = ['코로나19', '화재', '미세먼지', '지진', '한파']
+
 save_path = "./naver_news_article_2022"
 
 for keyword in keywords:
     print(f"start keyword - {keyword} crawling ...")
-    crawl_news_data(keyword=keyword, year=2022, month=11, start_day=26, end_day=26, save_path=save_path)
+    crawl_news_data(keyword=keyword, year=2022, month=11, start_day=27, end_day=27, save_path=save_path)
