@@ -81,21 +81,21 @@ def get_naver_news_info_from_selenium(keyword, save_path, target_date, ds_de, so
                                                                             more_news=True)
     driver.close()
     
-    if len(more_news_url_list) > 0:
-        print(len(more_news_url_list))
-        more_news_url_list = list(set(more_news_url_list))
-        print(f"->{len(more_news_url_list)}")
-        for more_news_url in more_news_url_list:
-            driver = wd.Chrome("./chromedriver")
-            driver.get(more_news_url)
+    # if len(more_news_url_list) > 0:
+    #     print(len(more_news_url_list))
+    #     more_news_url_list = list(set(more_news_url_list))
+    #     print(f"->{len(more_news_url_list)}")
+    #     for more_news_url in more_news_url_list:
+    #         driver = wd.Chrome("./chromedriver")
+    #         driver.get(more_news_url)
             
-            press_list, title_list, link_list, more_news_url_list = get_article_info(driver=driver, 
-                                                                            crawl_date=crawl_date, 
-                                                                            press_list=press_list, 
-                                                                            title_list=title_list, 
-                                                                            link_list=link_list,
-                                                                            date_list=date_list)
-            driver.close()
+    #         press_list, title_list, link_list, more_news_url_list = get_article_info(driver=driver, 
+    #                                                                         crawl_date=crawl_date, 
+    #                                                                         press_list=press_list, 
+    #                                                                         title_list=title_list, 
+    #                                                                         link_list=link_list,
+    #                                                                         date_list=date_list)
+    #         driver.close()
     article_df = pd.DataFrame({"제목": title_list, "링크": link_list})
     
     print(f"extract article num : {len(article_df)}")
