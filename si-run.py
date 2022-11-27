@@ -113,9 +113,9 @@ def crawl_news_data(keyword, year, month, start_day, end_day, save_path):
 
         get_naver_news_info_from_selenium(keyword=keyword, save_path=f"{save_path}/{target_date}_{keyword}_.xlsx", target_date=target_date, ds_de=ds_de, remove_duplicate=False)
 
-keywords = ['코로나19', '화재', '미세먼지', '지진', '화재']
+keywords = ['코로나19', '화재', '미세먼지', '지진', '한파']
 save_path = "./naver_news_article_2022"
 
 for keyword in keywords:
     print(f"start keyword - {keyword} crawling ...")
-    crawl_news_data(keyword=keyword, year=2022, month=11, start_day=13, end_day=13, save_path=save_path)
+    crawl_news_data(keyword=keyword, year=2022, month=11, start_day=26, end_day=26, save_path=save_path)
