@@ -111,7 +111,7 @@ def crawl_news_data(keyword, year, month, start_day, end_day, save_path):
         target_date = date_time_obj.strftime("%Y%m%d")
         ds_de = date_time_obj.strftime("%Y.%m.%d")
 
-        get_naver_news_info_from_selenium(keyword=keyword, save_path=f"{save_path}/{keyword}_.xlsx", target_date=target_date, ds_de=ds_de, remove_duplicate=False)
+        get_naver_news_info_from_selenium(keyword=keyword, save_path=f"{save_path}/{keyword}.xlsx", target_date=target_date, ds_de=ds_de, remove_duplicate=False)
 
 keywords = ['코로나19', '화재', '미세먼지', '지진', '한파']
 
